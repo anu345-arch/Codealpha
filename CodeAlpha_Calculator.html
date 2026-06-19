@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modern Calculator</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+background:linear-gradient(135deg,#4facfe,#00f2fe);
+}
+
+.calculator{
+background:#222;
+padding:20px;
+border-radius:20px;
+box-shadow:0 10px 30px rgba(0,0,0,.4);
+width:340px;
+}
+
+#display{
+width:100%;
+height:70px;
+font-size:30px;
+text-align:right;
+padding:15px;
+border:none;
+border-radius:10px;
+margin-bottom:20px;
+background:#111;
+color:#fff;
+outline:none;
+}
+
+.buttons{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:10px;
+}
+
+button{
+height:65px;
+font-size:22px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+transition:.3s;
+background:#333;
+color:white;
+}
+
+button:hover{
+transform:scale(1.05);
+background:#555;
+}
+
+.operator{
+background:#ff9800;
+}
+
+.operator:hover{
+background:#ffb74d;
+}
+
+.equal{
+grid-column:span 2;
+background:#28a745;
+}
+
+.equal:hover{
+background:#34d058;
+}
+
+.clear{
+background:#e53935;
+}
+
+.clear:hover{
+background:#ef5350;
+}
+
+.delete{
+background:#6c757d;
+}
+
+.delete:hover{
+background:#8a8f94;
+}
+
+@media(max-width:400px){
+.calculator{
+width:95%;
+}
+button{
+height:60px;
+font-size:20px;
+}
+}
+</style>
+
+</head>
+<body>
+
+<div class="calculator">
+
+<input type="text" id="display" readonly>
+
+<div class="buttons">
+
+<button class="clear" onclick="clearDisplay()">C</button>
+<button class="delete" onclick="deleteLast()">⌫</button>
+<button class="operator" onclick="append('%')">%</button>
+<button class="operator" onclick="append('/')">÷</button>
+
+<button onclick="append('7')">7</button>
+<button onclick="append('8')">8</button>
+<button onclick="append('9')">9</button>
+<button class="operator" onclick="append('*')">×</button>
+
+<button onclick="append('4')">4</button>
+<button onclick="append('5')">5</button>
+<button onclick="append('6')">6</button>
+<button class="operator" onclick="append('-')">−</button>
+
+<button onclick="append('1')">1</button>
+<button onclick="append('2')">2</button>
+<button onclick="append('3')">3</button>
+<button class="operator" onclick="append('+')">+</button>
+
+<button onclick="append('0')">0</button>
+<button onclick="append('.')">.</button>
+<button class="equal" onclick="calculate()">=</button>
+
+</div>
+
+</div>
+
+<script>
+
+const display=document.getElementById("display");
+
+function append(value){
+display.value+=value;
+}
+
+function clearDisplay(){
+display.value="";
+}
+
+function deleteLast(){
+display.value=display.value.slice(0,-1);
+}
+
+function calculate(){
+
+try{
+
+display.value=eval(display.value);
+
+}
+
+catch{
+
+display.value="Error";
+
+}
+
+}
+
+// Keyboard Support
+
+document.addEventListener("keydown",function(e){
+
+if((e.key>='0' && e.key<='9') || ['+','-','*','/','.','%'].includes(e.key)){
+append(e.key);
+}
+
+else if(e.key==="Enter"){
+e.preventDefault();
+calculate();
+}
+
+else if(e.key==="Backspace"){
+deleteLast();
+}
+
+else if(e.key==="Escape"){
+clearDisplay();
+}
+
+});
+
+</script>
+
+</body>
+</html>
